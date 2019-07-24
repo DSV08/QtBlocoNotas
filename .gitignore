@@ -1,0 +1,10 @@
+
+*.stash
+
+debug/
+
+release/
+
+ui_mainwindow\.h
+
+*.user
