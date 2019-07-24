@@ -14,16 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="textEdit">
-    <property name="geometry">
-     <rect>
-      <x>3</x>
-      <y>0</y>
-      <width>421</width>
-      <height>291</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTextEdit" name="textEdit"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -41,15 +36,23 @@
     <addaction name="actionNovo"/>
     <addaction name="actionAbrir"/>
     <addaction name="actionSalvar"/>
+    <addaction name="actionSalvarComo"/>
+    <addaction name="separator"/>
+    <addaction name="actionConfigurarPagina"/>
+    <addaction name="actionImprimir"/>
+    <addaction name="separator"/>
+    <addaction name="actionSair"/>
    </widget>
    <widget class="QMenu" name="menuEditar">
     <property name="title">
      <string>Editar</string>
     </property>
     <addaction name="actionDesfazer"/>
+    <addaction name="separator"/>
+    <addaction name="actionRecortar"/>
     <addaction name="actionCopiar"/>
     <addaction name="actionColar"/>
-    <addaction name="actionRecortar"/>
+    <addaction name="actionExcluir"/>
    </widget>
    <widget class="QMenu" name="menuFormatar">
     <property name="title">
@@ -61,10 +64,17 @@
      <string>Exibir</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuAjuda">
+    <property name="title">
+     <string>Ajuda</string>
+    </property>
+    <addaction name="actionSobre"/>
+   </widget>
    <addaction name="menuarquivo"/>
    <addaction name="menuEditar"/>
    <addaction name="menuFormatar"/>
    <addaction name="menuExibir"/>
+   <addaction name="menuAjuda"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -79,35 +89,92 @@
    <property name="text">
     <string>Novo</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionAbrir">
    <property name="text">
     <string>Abrir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="actionSalvar">
    <property name="text">
     <string>Salvar</string>
    </property>
-  </action>
-  <action name="actionDesfazer">
-   <property name="text">
-    <string>Desfazer</string>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionCopiar">
    <property name="text">
     <string>Copiar</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="actionColar">
    <property name="text">
     <string>Colar</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
   </action>
   <action name="actionRecortar">
    <property name="text">
     <string>Recortar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionSalvarComo">
+   <property name="text">
+    <string>Salvar Como</string>
+   </property>
+  </action>
+  <action name="actionConfigurarPagina">
+   <property name="text">
+    <string>Configurar Página</string>
+   </property>
+  </action>
+  <action name="actionImprimir">
+   <property name="text">
+    <string>Imprimir</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="text">
+    <string>Sair</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionSobre">
+   <property name="text">
+    <string>Sobre</string>
+   </property>
+  </action>
+  <action name="actionExcluir">
+   <property name="text">
+    <string>Excluir</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionDesfazer">
+   <property name="text">
+    <string>Desfazer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
  </widget>

@@ -8,3 +8,11 @@ release/
 ui_mainwindow\.h
 
 *.user
+
+\.vs/QtBlocoNotas/v14/
+
+*.opendb
+
+*.db
+
+*.bak
