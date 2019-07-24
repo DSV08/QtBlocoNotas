@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>428</width>
+    <height>346</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>0</y>
+      <width>421</width>
+      <height>291</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>428</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuarquivo">
+    <property name="title">
+     <string>Arquivo</string>
+    </property>
+    <addaction name="actionNovo"/>
+    <addaction name="actionAbrir"/>
+    <addaction name="actionSalvar"/>
+   </widget>
+   <widget class="QMenu" name="menuEditar">
+    <property name="title">
+     <string>Editar</string>
+    </property>
+    <addaction name="actionDesfazer"/>
+    <addaction name="actionCopiar"/>
+    <addaction name="actionColar"/>
+    <addaction name="actionRecortar"/>
+   </widget>
+   <widget class="QMenu" name="menuFormatar">
+    <property name="title">
+     <string>Formatar</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuExibir">
+    <property name="title">
+     <string>Exibir</string>
+    </property>
+   </widget>
+   <addaction name="menuarquivo"/>
+   <addaction name="menuEditar"/>
+   <addaction name="menuFormatar"/>
+   <addaction name="menuExibir"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNovo">
+   <property name="text">
+    <string>Novo</string>
+   </property>
+  </action>
+  <action name="actionAbrir">
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionSalvar">
+   <property name="text">
+    <string>Salvar</string>
+   </property>
+  </action>
+  <action name="actionDesfazer">
+   <property name="text">
+    <string>Desfazer</string>
+   </property>
+  </action>
+  <action name="actionCopiar">
+   <property name="text">
+    <string>Copiar</string>
+   </property>
+  </action>
+  <action name="actionColar">
+   <property name="text">
+    <string>Colar</string>
+   </property>
+  </action>
+  <action name="actionRecortar">
+   <property name="text">
+    <string>Recortar</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
