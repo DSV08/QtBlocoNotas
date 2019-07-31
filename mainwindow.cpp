@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :  QMainWindow(parent),  ui(new Ui::Main
 
 	//chamada dos connects do QT
 	this->criarConects();
+
+	//inicializando o nome da janela principal
+	this->escreveTituloJanelaPrincipal();
 }
 
 MainWindow::~MainWindow()
@@ -17,6 +20,16 @@ MainWindow::~MainWindow()
 void MainWindow::printDebug()
 {
 	qDebug() << "oi passei por aqui" << endl;
+}
+
+void MainWindow::setArquivoCorrente(QString arquivoCorrente)
+{
+	this->currentFileName = arquivoCorrente;
+}
+
+QString MainWindow::getArquivoCorrente()
+{
+	return this->currentFileName;
 }
 
 void MainWindow::criarConects()
@@ -51,6 +64,50 @@ void MainWindow::criarConects()
 
 }
 
+bool MainWindow::limparInterface()
+{
+	this->ui->textEdit->clear();
+	return false;
+}
+
+void MainWindow::salvarArquivo()
+{
+	//Criar Um Arquivo 
+	QFileInfo tipoArquivo(this->getArquivoCorrente());
+	QFile arquivo(this->getArquivoCorrente());
+	QString ext = tipoArquivo.suffix();  // ext = "gz"
+
+										 //se o arquivo for txt
+	if (ext.compare("txt") == 0)
+	{
+		this->slotSalvarTXT(this->getArquivoCorrente(), this->ui->textEdit->toPlainText());
+
+	}
+	else //se o arquivo for pdf
+	{
+
+		this->slotSalvarPDF(this->getArquivoCorrente(), this->ui->textEdit->toPlainText());
+	}
+}
+
+void MainWindow::escreverBarraStatus(QString msgs)
+{
+	this->statusBar()->clearMessage();
+	this->statusBar()->showMessage(msgs, 5000);
+}
+
+void MainWindow::escreveTituloJanelaPrincipal(QString msg)
+{
+
+	//concatenado Strings
+	msg.append(" - ");
+	msg.append("Bloco de Notas");
+
+	//trocar o titulo da janele principal
+	this->setWindowTitle(msg);
+
+}
+
 
 //
 // menu Arquivo
@@ -59,28 +116,59 @@ void MainWindow::criarConects()
 void MainWindow::slotAbrir()
 {
    //Pegando o arquivo que será aberto
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/home",tr("Texto (*.txt)"));
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/home",tr("Texto (*.txt)"));
 
    //Exibindo o arquivo que será aberto no textEdit
    QFile file(fileName);
    if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
-       return;
+	   return;
    else
    {
-       QTextStream in(&file);
-       while(!in.atEnd())
-       {
-           this->ui->textEdit->append(in.readLine());
-       }
-       file.close();
+	   QTextStream in(&file);
+	   while(!in.atEnd())
+	   {
+		   this->ui->textEdit->append(in.readLine());
+	   }
+	   file.close();
    }
 }
 
 //metodo para salvar um arquivo ascii do bloco de notas
 void MainWindow::slotSalvar()
 {
+	
+	//verificando se a variavel global armazenamento do caminho do arquivo existe
+	if (this->getArquivoCorrente().isEmpty())
+	{
+		//perguntado ao usuario onde ele quer salvar o arquivo
+		QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath(), tr("Texto (*.txt) ;; PDF (*.pdf)"));
+		this->setArquivoCorrente(fileName);
+	
+
+		//chamando o metodo de salvar o arquivo 
+		this->salvarArquivo();
+
+	}
+	else {
+
+		//chamando o metodo de salvar o arquivo 
+		this->salvarArquivo();
+	}
+	
+	
+
+	//Atribuindo o nome do arquivo no titulo da janela principal
+	QString shortFileName = QFileInfo(this->getArquivoCorrente()).fileName();
+	this->escreveTituloJanelaPrincipal(shortFileName);
+	
+
+
+}
+
+void MainWindow::slotSalvarComo()
+{
 	//perguntado ao usuario onde ele quer salvar o arquivo
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath() , tr("Texto (*.txt)"));
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath() ,  tr("Text files (*.txt)"));
 
 	//Criar Um Arquivo Texto
 	QFile file(fileName);
@@ -95,29 +183,6 @@ void MainWindow::slotSalvar()
 		file.close();
 
 	}
-
-}
-
-void MainWindow::slotSalvarComo()
-{
-    //perguntado ao usuario onde ele quer salvar o arquivo
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath() ,
-                                                    tr("Images (*.png *.xpm *.jpg);;Text files (*.txt);;"
-                                                       "XML files (*.xml)"));
-
-    //Criar Um Arquivo Texto
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly| QIODevice::Text))
-        return;
-    else {
-
-        QTextStream out(&file);
-        out << this->ui->textEdit->toPlainText();
-
-        // optional, as QFile destructor will already do it:
-        file.close();
-
-    }
 }
 
 void MainWindow::slotConfigurarPagina()
@@ -141,37 +206,85 @@ void MainWindow::slotSair()
 
 void MainWindow::slotDesfazer()
 {
-    this->ui->textEdit->undo();
+	this->ui->textEdit->undo();
 }
 
 void MainWindow::slotCopiar()
 {
-    this->ui->textEdit->copy();
+	this->ui->textEdit->copy();
 }
 
 void MainWindow::slotColar()
 {
-    this->ui->textEdit->paste();
+	this->ui->textEdit->paste();
 }
 
 void MainWindow::slotRecortar()
 {
-    this->ui->textEdit->cut();
+	this->ui->textEdit->cut();
 }
 
 void MainWindow::slotExcluir()
 {
-    //this->ui->textEdit->clear();
+	//this->ui->textEdit->clear();
 }
 
 void MainWindow::slotSobre()
 {
+
 }
+
+//Salvar o conteudo da interface em PDF
+void MainWindow::slotSalvarPDF(QString fileName, QString text)
+{
+	QPrinter printer;
+	printer.setOutputFormat(QPrinter::PdfFormat);
+	printer.setOutputFileName(fileName);
+	
+	QPainter painter;
+	if (!painter.begin(&printer)) { // failed to open file
+		qWarning("failed to open file, is it writable?");
+		return;
+	}
+	
+	painter.drawText(10, 10, text);
+	
+	/*if (!printer.newPage()) {
+		qWarning("failed in flushing page to disk, disk full?");
+		return;
+	}
+	painter.drawText(10, 10, "Test 2");*/
+	painter.end();
+
+	QString shortFileName = QFileInfo(this->getArquivoCorrente()).fileName();
+	this->escreverBarraStatus("O Arquivo " + shortFileName + " foi salvo com sucesso");
+}
+
+void MainWindow::slotSalvarTXT(QString fileName, QString text)
+{
+	// criando um arquivo TXT
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+		return;
+	else {
+
+		QTextStream out(&file);
+		out << text;
+
+		// optional, as QFile destructor will already do it:
+		file.close();
+
+
+		//escrendo uma mensagem de que terminou de salvar
+		QString shortFileName = QFileInfo(file).fileName();
+		this->escreverBarraStatus("O Arquivo " + shortFileName + " foi salvo com sucesso");
+	}
+}
+
 
 void MainWindow::slotNovo()
 {
-    //this->printDebug();
-    this->ui->textEdit->clear();
+	this->ui->textEdit->clear();
 }
 
 
