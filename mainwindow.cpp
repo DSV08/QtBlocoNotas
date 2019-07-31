@@ -58,7 +58,22 @@ void MainWindow::criarConects()
 
 void MainWindow::slotAbrir()
 {
+   //Pegando o arquivo que será aberto
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/home",tr("Texto (*.txt)"));
 
+   //Exibindo o arquivo que será aberto no textEdit
+   QFile file(fileName);
+   if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
+       return;
+   else
+   {
+       QTextStream in(&file);
+       while(!in.atEnd())
+       {
+           this->ui->textEdit->append(in.readLine());
+       }
+       file.close();
+   }
 }
 
 //metodo para salvar um arquivo ascii do bloco de notas
@@ -85,6 +100,24 @@ void MainWindow::slotSalvar()
 
 void MainWindow::slotSalvarComo()
 {
+    //perguntado ao usuario onde ele quer salvar o arquivo
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath() ,
+                                                    tr("Images (*.png *.xpm *.jpg);;Text files (*.txt);;"
+                                                       "XML files (*.xml)"));
+
+    //Criar Um Arquivo Texto
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly| QIODevice::Text))
+        return;
+    else {
+
+        QTextStream out(&file);
+        out << this->ui->textEdit->toPlainText();
+
+        // optional, as QFile destructor will already do it:
+        file.close();
+
+    }
 }
 
 void MainWindow::slotConfigurarPagina()
@@ -108,22 +141,27 @@ void MainWindow::slotSair()
 
 void MainWindow::slotDesfazer()
 {
+    this->ui->textEdit->undo();
 }
 
 void MainWindow::slotCopiar()
 {
+    this->ui->textEdit->copy();
 }
 
 void MainWindow::slotColar()
 {
+    this->ui->textEdit->paste();
 }
 
 void MainWindow::slotRecortar()
 {
+    this->ui->textEdit->cut();
 }
 
 void MainWindow::slotExcluir()
 {
+    //this->ui->textEdit->clear();
 }
 
 void MainWindow::slotSobre()
@@ -132,7 +170,8 @@ void MainWindow::slotSobre()
 
 void MainWindow::slotNovo()
 {
-	this->printDebug();
+    //this->printDebug();
+    this->ui->textEdit->clear();
 }
 
 
