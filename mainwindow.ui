@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>428</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuarquivo">
@@ -39,6 +39,7 @@
     <addaction name="actionSalvarComo"/>
     <addaction name="separator"/>
     <addaction name="actionConfigurarPagina"/>
+    <addaction name="actionVisualizarImpressao"/>
     <addaction name="actionImprimir"/>
     <addaction name="separator"/>
     <addaction name="actionSair"/>
@@ -48,6 +49,7 @@
      <string>Editar</string>
     </property>
     <addaction name="actionDesfazer"/>
+    <addaction name="actionRefazer"/>
     <addaction name="separator"/>
     <addaction name="actionRecortar"/>
     <addaction name="actionCopiar"/>
@@ -169,12 +171,25 @@
     <string>Del</string>
    </property>
   </action>
+  <action name="actionRefazer">
+   <property name="text">
+    <string>Refazer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
   <action name="actionDesfazer">
    <property name="text">
     <string>Desfazer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionVisualizarImpressao">
+   <property name="text">
+    <string>Visualizar Impressão</string>
    </property>
   </action>
  </widget>

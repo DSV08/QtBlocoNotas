@@ -11,6 +11,10 @@
 #include <QTextStream>
 #include <QPrinter>
 #include <QPainter>
+#include <QPageSetupDialog>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
+
 
 using namespace std;
 
@@ -18,6 +22,10 @@ namespace Ui {
 class MainWindow;
 }
 
+
+/** A Test class.
+*  More details about this class.
+*/
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -26,7 +34,9 @@ public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow();
 
-	//metodo teste para Debug
+	 /*!
+	 * @brief metodo teste para Debug
+	 */
 	void printDebug();
 
 	//metodo set para a variavel arquivo corrente
@@ -60,6 +70,17 @@ private:
 	//Atribuindo o nome do arquivo no titulo da janela principal
 	void escreveTituloJanelaPrincipal(QString msg = "");
 
+
+	//Teste janela propriedade da pagina 
+	QPageSetupDialog *pageprop;
+
+	QPrintDialog *paginaImprimir;
+
+	QPrintPreviewDialog *paginaVisualizar;
+
+
+
+
 private slots:
 
 //
@@ -76,6 +97,7 @@ void slotAbrir();
 void slotSalvar();
 
 void slotSalvarComo();
+void slotVisualizarImpressao();
 void slotConfigurarPagina();
 void slotImprimir();
 void slotSair();
@@ -86,6 +108,7 @@ void slotSair();
 //
 
 void slotDesfazer();
+void slotRefazer();
 void slotCopiar();
 void slotColar();
 void slotRecortar();

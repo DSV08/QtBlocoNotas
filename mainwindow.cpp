@@ -10,6 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :  QMainWindow(parent),  ui(new Ui::Main
 
 	//inicializando o nome da janela principal
 	this->escreveTituloJanelaPrincipal();
+
+	this->pageprop = new QPageSetupDialog();
+	//this->pageprop->exec();
+
+	this->paginaImprimir = new QPrintDialog;
+
 }
 
 MainWindow::~MainWindow()
@@ -35,24 +41,26 @@ QString MainWindow::getArquivoCorrente()
 void MainWindow::criarConects()
 {
 	/* menu Arquivo*/
-	connect(ui->actionNovo,              SIGNAL(triggered()), this, SLOT(slotNovo()));
-	connect(ui->actionAbrir,             SIGNAL(triggered()), this, SLOT(slotAbrir()));
-	connect(ui->actionSalvar,            SIGNAL(triggered()), this, SLOT(slotSalvar()));
-	connect(ui->actionSalvarComo,        SIGNAL(triggered()), this, SLOT(slotSalvarComo()));
-	connect(ui->actionConfigurarPagina,  SIGNAL(triggered()), this, SLOT(slotConfigurarPagina()));
-	connect(ui->actionImprimir,          SIGNAL(triggered()), this, SLOT(slotImprimir()));
-	connect(ui->actionSair,              SIGNAL(triggered()), this, SLOT(slotSair()));
+	connect(ui->actionNovo,                SIGNAL(triggered()), this, SLOT(slotNovo()));
+	connect(ui->actionAbrir,               SIGNAL(triggered()), this, SLOT(slotAbrir()));
+	connect(ui->actionSalvar,              SIGNAL(triggered()), this, SLOT(slotSalvar()));
+	connect(ui->actionSalvarComo,          SIGNAL(triggered()), this, SLOT(slotSalvarComo()));
+	connect(ui->actionConfigurarPagina,    SIGNAL(triggered()), this, SLOT(slotConfigurarPagina()));
+	connect(ui->actionVisualizarImpressao, SIGNAL(triggered()), this, SLOT(slotVisualizarImpressao()));
+	connect(ui->actionImprimir,            SIGNAL(triggered()), this, SLOT(slotImprimir()));
+	connect(ui->actionSair,                SIGNAL(triggered()), this, SLOT(slotSair()));
 	
 
 	/* menu Editar*/
 	connect(ui->actionDesfazer, SIGNAL(triggered()), this, SLOT(slotDesfazer()));
+	connect(ui->actionRefazer,  SIGNAL(triggered()), this, SLOT(slotRefazer()));
 	connect(ui->actionCopiar,   SIGNAL(triggered()), this, SLOT(slotCopiar()));
 	connect(ui->actionColar,    SIGNAL(triggered()), this, SLOT(slotColar()));
 	connect(ui->actionRecortar, SIGNAL(triggered()), this, SLOT(slotRecortar()));
 	connect(ui->actionExcluir,  SIGNAL(triggered()), this, SLOT(slotExcluir()));
 
 	/* menu Formatar*/
-
+	
 
 	/* menu Exibir*/
 
@@ -68,6 +76,9 @@ bool MainWindow::limparInterface()
 {
 	this->ui->textEdit->clear();
 	return false;
+
+	this->currentFileName.clear();
+	this->escreveTituloJanelaPrincipal();
 }
 
 void MainWindow::salvarArquivo()
@@ -142,12 +153,17 @@ void MainWindow::slotSalvar()
 	{
 		//perguntado ao usuario onde ele quer salvar o arquivo
 		QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath(), tr("Texto (*.txt) ;; PDF (*.pdf)"));
-		this->setArquivoCorrente(fileName);
-	
 
-		//chamando o metodo de salvar o arquivo 
-		this->salvarArquivo();
+		if (!fileName.isEmpty()) {
+			this->setArquivoCorrente(fileName);
 
+			//chamando o metodo de salvar o arquivo 
+			this->salvarArquivo();
+		}
+		else
+		{
+			return;
+		}
 	}
 	else {
 
@@ -185,12 +201,21 @@ void MainWindow::slotSalvarComo()
 	}
 }
 
+
 void MainWindow::slotConfigurarPagina()
 {
+	this->pageprop->exec();
+}
+
+void MainWindow::slotVisualizarImpressao()
+{
+	this->paginaVisualizar = new QPrintPreviewDialog();
+	this->paginaVisualizar->exec();
 }
 
 void MainWindow::slotImprimir()
 {
+	this->paginaImprimir->exec();
 }
 
 void MainWindow::slotSair()
@@ -207,6 +232,11 @@ void MainWindow::slotSair()
 void MainWindow::slotDesfazer()
 {
 	this->ui->textEdit->undo();
+}
+
+void MainWindow::slotRefazer()
+{
+	this->ui->textEdit->redo();
 }
 
 void MainWindow::slotCopiar()
@@ -226,7 +256,7 @@ void MainWindow::slotRecortar()
 
 void MainWindow::slotExcluir()
 {
-	//this->ui->textEdit->clear();
+	
 }
 
 void MainWindow::slotSobre()
