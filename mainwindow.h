@@ -14,7 +14,8 @@
 #include <QPageSetupDialog>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
-
+#include <QMessageBox>
+#include <QDateTime>
 
 using namespace std;
 
@@ -57,6 +58,9 @@ private:
 
 	//variavel para o armazenamento do caminho do arquivo
 	QString currentFileName;
+
+	//variavel para armazenar a data da excucao do programa
+	QDateTime data;
 	
 	//metodo responsavel pode realizar um clean na interface. 
 	bool limparInterface();
@@ -101,6 +105,8 @@ void slotVisualizarImpressao();
 void slotConfigurarPagina();
 void slotImprimir();
 void slotSair();
+
+void printPreview(QPrinter *printer);
 
 
 //
