@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :  QMainWindow(parent),  ui(new Ui::Main
 	this->pageprop = new QPageSetupDialog();
 	//this->pageprop->exec();
 
-	this->data = QDataTime::currentDateTime();
+    this->data = QDateTime::currentDateTime();
+    this->hora = QTime::currentTime();
 	
 
 }
@@ -47,7 +48,7 @@ void MainWindow::criarConects()
 	connect(ui->actionSalvar,              SIGNAL(triggered()), this, SLOT(slotSalvar()));
 	connect(ui->actionSalvarComo,          SIGNAL(triggered()), this, SLOT(slotSalvarComo()));
 	connect(ui->actionConfigurarPagina,    SIGNAL(triggered()), this, SLOT(slotConfigurarPagina()));
-	connect(ui->actionVisualizarImpressao, SIGNAL(triggered()), this, SLOT(slotVisualizarImpressao()));
+    connect(ui->actionVisualizarImpressao, SIGNAL(triggered()), this, SLOT(slotVisualizarImpressao()));
 	connect(ui->actionImprimir,            SIGNAL(triggered()), this, SLOT(slotImprimir()));
 	connect(ui->actionSair,                SIGNAL(triggered()), this, SLOT(slotSair()));
 	
@@ -76,10 +77,10 @@ void MainWindow::criarConects()
 bool MainWindow::limparInterface()
 {
 	this->ui->textEdit->clear();
-	return false;
 
 	this->currentFileName.clear();
 	this->escreveTituloJanelaPrincipal();
+    return true;
 }
 
 void MainWindow::salvarArquivo()
@@ -129,6 +130,7 @@ void MainWindow::slotAbrir()
 {
    //Pegando o arquivo que será aberto
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::homePath(), tr("Texto (*.txt)"));
+    this->ui->textEdit->clear();
 	
 	if (fileName.isEmpty())
 	{
@@ -207,19 +209,33 @@ void MainWindow::slotSalvarComo()
 	//perguntado ao usuario onde ele quer salvar o arquivo
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Salvar Arquivo"), QDir::homePath() ,  tr("Text files (*.txt) ;; PDF (*.pdf)"));
 
-	//Criar Um Arquivo Texto
-	QFile file(fileName);
-	if (!file.open(QIODevice::WriteOnly| QIODevice::Text))
-		return;
-	else {
+    if(fileName.isEmpty())
+    {
+        return;
+    }
+    else
+    {
+        this->setArquivoCorrente(fileName);
 
-		QTextStream out(&file);
-		out << this->ui->textEdit->toPlainText();
+        //Criar Um Arquivo Texto
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly| QIODevice::Text))
+            return;
+        else {
 
-		// optional, as QFile destructor will already do it:
-		file.close();
+            QTextStream out(&file);
+            out << this->ui->textEdit->toPlainText();
 
-	}
+            // optional, as QFile destructor will already do it:
+            file.close();
+
+        }
+    }
+    this->salvarArquivo();
+
+    //Atribuindo o nome do arquivo no titulo da janela principal
+    QString shortFileName = QFileInfo(this->getArquivoCorrente()).fileName();
+    this->escreveTituloJanelaPrincipal(shortFileName);
 }
 
 
@@ -299,10 +315,14 @@ void MainWindow::slotSobre()
 	//QMessageBox::information(this, "Sobre", "Este programa tem o objetivo de replicar as funcionalidades de um bloco de notas");
 	//msgBox.setText(QDateTime::toString("dd.MM.yyyy"));
 
-	QString format = "dd.MM.yyyy";
-	QDataTime time = QDateTime::currentDateTime();
+    QString formatDate = "dd.MM.yyyy";
+    QString formatTime = "hh.mm.ss";
+    //QDateTime time = QDateTime::currentDateTime();
+    QString dataDia = this->data.toString(formatDate);
+    QString dataHora = this->hora.toString(formatTime);
 
-	QString dataHora = "20/20/2020 -  00:00:00";
+
+    //QString dataHora = "20/20/2020 -  00:00:00";
 
 	QMessageBox::information(this, trUtf8("Sobre"),
 		"<P>"
@@ -310,10 +330,10 @@ void MainWindow::slotSobre()
 		"funcionalidades de um bloco de notas </b>"
 		"<br><br>"
 		"Autor: Danilo<br>"
-		"Data: <br>"
-		"</P>" +
-		dataHora.toHtmlEscaped() +
-		"<br>"
+        "Data: " + dataDia.toHtmlEscaped() + "   " + dataHora.toHtmlEscaped() +
+        "<br>"
+        "</P>"
+        "<br>"
 	
 	
 	
@@ -373,7 +393,7 @@ void MainWindow::slotSalvarTXT(QString fileName, QString text)
 
 void MainWindow::slotNovo()
 {
-	this->ui->textEdit->clear();
+    this->limparInterface();
 }
 
 

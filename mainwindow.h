@@ -50,7 +50,7 @@ private:
 	//objetos de interface do Qt
 	Ui::MainWindow *ui;
 
-	//Variavel com o arquivo que está sendo excecutado
+	//Variavel com o arquivo que esta sendo excecutado
 	QFile arquivoCorrente;
 
 	// Connects da Classe
@@ -61,6 +61,9 @@ private:
 
 	//variavel para armazenar a data da excucao do programa
 	QDateTime data;
+
+	//Variavel para armazenar a hora da execucao do programa
+    QTime hora;
 	
 	//metodo responsavel pode realizar um clean na interface. 
 	bool limparInterface();
