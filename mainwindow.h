@@ -25,49 +25,104 @@ class MainWindow;
 
 
 /** A Test class.
-*  More details about this class.
+* Classe da janela principal. A interface que contém todas as funções do bloco de notas(abrir, salvar, etc)
 */
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
 public:
+	/*!
+	 *@brief Construtor 
+	 *Construtor da Classe MainWindow
+	 * @param parent Ponteiro para um Widget da janela principal
+	 */
 	explicit MainWindow(QWidget *parent = nullptr);
+
+
+	/*!
+	 * @brief Destrutor
+	 * Destrutor da Classe MainWindow
+	 */
 	~MainWindow();
+
 
 	 /*!
 	 * @brief metodo teste para Debug
 	 */
 	void printDebug();
 
-	//metodo set para a variavel arquivo corrente
+
+	/*!
+	 * @brief Método Set.
+	 * Método que guarda o caminho do arquivo que é editado
+	 * @param arquivoCorrente Variavel com o caminho do arquivo que é editado.
+	 * @return void
+	 */
 	void setArquivoCorrente(QString arquivoCorrente);
 
-	//metodo get para a variavel arquivo corrente
+
+	/*!
+	 * @brief Método Get.
+	 * Método para obter o caminho do arquivo que é editado 
+	 * @return QString retona o caminho do arquivo texto que esta em uso 
+	 */
 	QString getArquivoCorrente();
 
+
 private:
-	//objetos de interface do Qt
+	/*!
+	 * @brief Ui
+	 * objetos de interface do Qt
+	 */
 	Ui::MainWindow *ui;
 
-	//Variavel com o arquivo que esta sendo excecutado
+
+	//Necessário?
 	QFile arquivoCorrente;
 
-	// Connects da Classe
+
+	/*!
+	 * @brief Criação dos conects
+	 * Método para estabelecer a relação de acão e reação dos botões e suas funcionalidades 
+	 */
 	void criarConects();
 
-	//variavel para o armazenamento do caminho do arquivo
+
+	/*!
+	* @brief Arquivo em uso
+	* Variavel global que armazena o caminho do arquivo que está sendo editado
+	*/
 	QString currentFileName;
 
-	//variavel para armazenar a data da excucao do programa
+
+	/*!
+	 * @brief Dia da excecução
+	 * Variavel para guardar o dia em que o programa foi excecutado
+	 */
 	QDateTime data;
 
-	//Variavel para armazenar a hora da execucao do programa
+
+	/*!
+	 * @brief Hora da excecução
+	 * Variavel para guardar a hora em que o programa foi excecutado
+	 */
     QTime hora;
 	
-	//metodo responsavel pode realizar um clean na interface. 
+
+	/*!
+	 * @brief Limpar a interface
+	 * Método para resetar as configurações do bloco de notas(caminho do arquivo em uso, título do bloco, etc)
+	 * dando assim um clean na interface
+	 */
 	bool limparInterface();
 
+
+	/*!
+	 * @brief Salvar
+	 * Método para salvar o texto no bloco de notas em um arquivo em uso ou em um novo arquivo
+	 *  que será criado caso não tenha um arquivo em uso
+	 */
 	//metodo para salvar os tipos de arquivo conforme escolhido pelo usuario, chamdo pelo slot save
 	void salvarArquivo();
 
