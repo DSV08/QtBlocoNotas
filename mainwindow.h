@@ -177,21 +177,75 @@ private slots:
 // menu Arquivo
 //
 
-//slot novo arquivo
+/*!
+ * @brief Slot novo
+ * Esse slot é excecutado quando a opção novo é escolhida, resetando o bloco de notas e 
+ * preparando para criar um novo arquivo
+ */
 void slotNovo();
 
-//slot para abrir um arquivo
+
+/*!
+ * @brief Slot abrir
+ * Esse slot é excecutado quando a opção abrir é escolhida, permitindo ao usuario escolher um arquivo
+ * que será aberto para editar, salvar, etc. 
+ * 
+ */
 void slotAbrir();
 
-//slot para salvar um arquivo
+
+/*!
+ * @brief Slot Salvar
+ * Esse slot é excecutado quando a opção salvar é escolhida, permitindo que a alteração feita no texto seja salva
+ * ou crie um arquivo caso o texto esteja sendo criado pela primeira vez
+ */
 void slotSalvar();
 
+
+/*!
+ * @brief Slot salvar como
+ * Esse slot é excecutado quando a opção salvar é escolhida, permitindo que o usuário salve um novo arquivo a partir 
+ * de um arquivo que já estava sendo editado e não altere o arquivo que estava em uso.
+ */
 void slotSalvarComo();
+
+
+/*!
+ * @brief Slot visualizar impressão
+ * Esse slot é excecutado quando a opção visualizar impressão é escolhida, abrindo uma tela em que é possível 
+ * visualizar como ficaria a impressão da página
+ */
 void slotVisualizarImpressao();
+
+
+/*!
+ * @brief Slot configurar página
+ * Esse slot é excecutado quando a opção configurar página é escolhida,abrindo uma tela que permite alterar 
+ * algumas configurações da página
+ */
 void slotConfigurarPagina();
+
+
+/*!
+ * @brief Slot imprimir
+ * Esse slot é excecutado quando a opção imprimir é escolhida, abrindo uma tela com as opções para imprimir
+ * a página
+ */
 void slotImprimir();
+
+
+/*!
+ * @brief Slot sair
+ * Esse slot é excecutado quando a opção sair é escolhida, fechando o bloco de notas
+ */
 void slotSair();
 
+
+/*!
+ * @brief printpreview
+ * Esse  Método é utilizado para exibir uma tela com a visualização do texto 
+ * @param printer Print para a utilização do método
+ */
 void printPreview(QPrinter *printer);
 
 
@@ -199,21 +253,79 @@ void printPreview(QPrinter *printer);
 // menu Editar
 //
 
+
+
+/*!
+ * @brief Slot desfazer
+ * Esse slot é excecutado quando a opção desfazer é escolhida, desfazendo a última modificação feita no texto 
+ */
 void slotDesfazer();
+
+
+/*!
+* @brief Slot refazer
+* Esse slot é excecutado quando a opção refazer é escolhida, refazendo a última modificação feita no texto
+*/
 void slotRefazer();
+
+
+/*!
+* @brief Slot copiar
+* Esse slot é excecutado quando a opção copiar é escolhida, que copia o texto selecionado
+*/
 void slotCopiar();
+
+
+/*!
+* @brief Slot colar
+* Esse slot é excecutado quando a opção colar é escolhida, colando no texto um texto anteriormente copiado ou recortado
+*/
 void slotColar();
+
+
+/*!
+* @brief Slot recortar
+* Esse slot é excecutado quando a opção recortar é escolhida, copiando um texto selecionado e deletando o texto que foi selecionado
+*/
 void slotRecortar();
+
+
+/*!
+* @brief Slot excluir
+* Esse slot é excecutado quando a opção excluir é escolhida, excluindo o texto selecionado
+*/
 void slotExcluir();
 
 
 //
 // menu Ajuda
 //
+
+
+
+/*!
+* @brief Slot sobre
+* Esse slot é excecutado quando a opção sobre é escolhida, abrindo uma tela com informações sobre 
+* autor data e hora da excecução do bloco de notas
+*/
 void slotSobre();
 
 
+/*!
+* @brief Slot salvar em pdf
+* Esse slot é excecutado quando a opção salvar ou salvar como é escolhida, possibilitando que o arquivo possa ser salvo em pdf
+* @param filename Nome do arquivo que será salvo
+* @param text Texto no bloco de notas do arquivo que será salvo
+*/
 void slotSalvarPDF(QString filename, QString text);
+
+
+/*!
+* @brief Slot salvar em txt
+* Esse slot é excecutado quando a opção salvar ou salvar como é escolhida, possibilitando que o arquivo possa ser salvo em txt
+* @param filename Nome do arquivo que será salvo
+* @param text Texto no bloco de notas do arquivo que será salvo
+*/
 void slotSalvarTXT(QString filename, QString text);
 
 };
