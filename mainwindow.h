@@ -32,6 +32,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
+
 	/*!
 	 *@brief Construtor 
 	 *Construtor da Classe MainWindow
@@ -71,6 +72,7 @@ public:
 
 
 private:
+
 	/*!
 	 * @brief Ui
 	 * objetos de interface do Qt
@@ -90,7 +92,7 @@ private:
 
 
 	/*!
-	* @brief Arquivo em uso
+	* @brief Caminho do Arquivo em uso
 	* Variavel global que armazena o caminho do arquivo que está sendo editado
 	*/
 	QString currentFileName;
@@ -114,30 +116,56 @@ private:
 	 * @brief Limpar a interface
 	 * Método para resetar as configurações do bloco de notas(caminho do arquivo em uso, título do bloco, etc)
 	 * dando assim um clean na interface
+	 *@return bool Retorna verdade se foi possivel limpar a interface com sucesso
 	 */
 	bool limparInterface();
 
 
 	/*!
 	 * @brief Salvar
-	 * Método para salvar o texto no bloco de notas em um arquivo em uso ou em um novo arquivo
+	 * Método para salvar o texto do bloco de notas em um arquivo em uso ou em um novo arquivo
 	 *  que será criado caso não tenha um arquivo em uso
 	 */
 	//metodo para salvar os tipos de arquivo conforme escolhido pelo usuario, chamdo pelo slot save
 	void salvarArquivo();
 
-	//metodo para escrever uma mensagem na barra de status
+
+	/*!
+	*@brief Mensagem de status
+	*Método que exibi uma mensagem na barra de status informando se uma determinada 
+	*operação foi realizada com sucesso
+	*@param msgs Messagem que será escrita na barra de status
+	*/
 	void escreverBarraStatus(QString msgs);
 
-	//Atribuindo o nome do arquivo no titulo da janela principal
+
+	/*!
+	*@brief Título
+	*Método para setar como título do bloco de notas o nome do arquivo em uso
+	*ou uma mensagem vazia caso o arquivo esteja sendo construido
+	*@param msg Mensagem com o nome do arquivo que será construido.
+	*/
 	void escreveTituloJanelaPrincipal(QString msg = "");
 
 
-	//Teste janela propriedade da pagina 
+	/*!
+	*@brief Configuração da página
+	*Variavel que aponta para uma janela de propriedades da página
+	*/
 	QPageSetupDialog *pageprop;
 
+
+	/*!
+	*@brief imprimir página
+	*Variavel que aponta para uma janela de propriedades para imprimir uma página
+	*/
 	QPrintDialog *paginaImprimir;
 
+
+	/*!
+	*@brief Visualizar página
+	*Variavel que aponta para uma janela de propriedades para visualizar uma página
+	*/
 	QPrintPreviewDialog *paginaVisualizar;
 
 
